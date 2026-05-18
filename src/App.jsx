@@ -6,6 +6,15 @@ const MOVIE_API_URL = 'https://api.themoviedb.org/3/search/movie';
 const TV_API_URL = 'https://api.themoviedb.org/3/search/tv';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
+/* COSTANTI PER OTTENERE IL POSTER */
+const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
+const POSTER = 'w342';
+
+function getPoster(poster){
+  if(!poster) return null;
+  return IMAGE_BASE_URL + POSTER + poster;
+}
+
 
 
 /* FUNZIONE RICERCA BANDIERA */
@@ -30,6 +39,23 @@ function Flag({ languageCode }) {
   )
 }
 
+function Poster({title, poster}){
+  const[imgError, setImgError] = useState(false);
+  const posterUrl = getPoster(poster);
+
+  if(!posterUrl || imgError){
+    return <div>Nessuna copertina disponibile</div>;
+  }
+
+  return (
+    <img
+    src={posterUrl}
+    alt={'Copertina di' + title}
+    width='154'
+    onError={() => setImgError(true)}
+    />
+  );
+}
 
 
 function App() {
@@ -86,7 +112,8 @@ function App() {
             title: movie.title,
             originalTitle: movie.original_title,
             language: movie.original_language,
-            vote: movie.vote_average
+            vote: movie.vote_average,
+            poster: movie.poster_path
           };
         });
         const normalizedTv = (tvData.results || []).map((tv) =>{
@@ -95,7 +122,8 @@ function App() {
             title: tv.name,
             originalTitle: tv.original_name,
             language: tv.original_language,
-            vote: tv.vote_average
+            vote: tv.vote_average,
+            poster: tv.poster_path
           };
         });
 
@@ -139,6 +167,7 @@ function App() {
         {movies.length === 0 && !loading && <p>Nessun film trovato.</p>} 
         {movies.map((movie) => (
           <article key={'movie-' + movie.id} className='movie-card'>
+            <Poster title={movie.title} poster={movie.poster} />
             <h3>{movie.title}</h3>
             <p><strong>Titolo originale:</strong>{movie.originalTitle}</p>
             <p>
@@ -156,6 +185,7 @@ function App() {
         {tvSeries.length === 0 && !loading && <p>Nessuna serie trovata.</p>} 
         {tvSeries.map((tv) => (
           <article key={'tv-' + tv.id} className='tv-card'>
+            <Poster title={tv.title} poster={tv.poster}/>
             <h3>{tv.title}</h3>
             <p><strong>Titolo originale:</strong>{tv.originalTitle}</p>
             <p>
