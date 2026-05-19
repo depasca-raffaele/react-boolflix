@@ -4,10 +4,13 @@ const SearchContext = createContext();
 
 export function SearchProvider({ children }) {
   const [query, setQuery] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('all');
 
   const value = {
     query,
-    setQuery
+    setQuery,
+    selectedGenre,
+    setSelectedGenre
   };
 
   return (

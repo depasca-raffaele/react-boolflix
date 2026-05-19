@@ -69,6 +69,7 @@ export function useTmdbSearch() {
             language: movie.original_language,
             vote: movie.vote_average,
             overview: movie.overview,
+            genreIds: movie.genre_ids || [],
             posterUrl: movie.poster_path
               ? 'https://image.tmdb.org/t/p/w342' + movie.poster_path
               : null
@@ -83,6 +84,7 @@ export function useTmdbSearch() {
             language: tv.original_language,
             vote: tv.vote_average,
             overview: tv.overview,
+            genreIds: tv.genre_ids || [],
             posterUrl: tv.poster_path
               ? 'https://image.tmdb.org/t/p/w342' + tv.poster_path
               : null
