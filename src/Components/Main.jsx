@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import MovieContext from '../Context/MovieContext';
+import ResultsContext from '../Context/ResultsContext';
 import Loader from './Loader';
 import ErrorMessage from './ErrorMessage';
 import ResultSection from './Results/ResultSection';
 
 function Main() {
-  const { movies, tvSeries, loading, error } = useContext(MovieContext);
+  const { movies, tvSeries, loading, error } = useContext(ResultsContext);
 
   return (
     <main className='app'>

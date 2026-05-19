@@ -1,19 +1,16 @@
-import { createContext, useState } from 'react';
-
-const MovieContext = createContext();
+import { useState } from 'react';
 
 const MOVIE_API_URL = 'https://api.themoviedb.org/3/search/movie';
 const TV_API_URL = 'https://api.themoviedb.org/3/search/tv';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-export function MovieProvider({ children }) {
-  const [query, setQuery] = useState('');
+export function useTmdbSearch() {
   const [movies, setMovies] = useState([]);
   const [tvSeries, setTvSeries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const searchAll = () => {
+  const searchAll = (query) => {
     const trimmedQuery = query.trim();
 
     if (!trimmedQuery) {
@@ -62,17 +59,19 @@ export function MovieProvider({ children }) {
         const movieData = data[0];
         const tvData = data[1];
 
-        const normalizedMovie = (movieData.results || []).map((movie) => {
+        
+/* NORMALIZZAZIONE */
+        const normalizedMovies = (movieData.results || []).map((movie) => {
           return {
             id: movie.id,
             title: movie.title,
             originalTitle: movie.original_title,
             language: movie.original_language,
             vote: movie.vote_average,
-            poster: movie.poster_path,
-            posterPath: movie.poster_path,
             overview: movie.overview,
-            posterUrl: movie.poster_path ? 'https://image.tmdb.org/t/p/w342' + movie.poster_path : null
+            posterUrl: movie.poster_path
+              ? 'https://image.tmdb.org/t/p/w342' + movie.poster_path
+              : null
           };
         });
 
@@ -83,14 +82,14 @@ export function MovieProvider({ children }) {
             originalTitle: tv.original_name,
             language: tv.original_language,
             vote: tv.vote_average,
-            poster: tv.poster_path,
-            posterPath: tv.poster_path,
             overview: tv.overview,
-            posterUrl: tv.poster_path ? 'https://image.tmdb.org/t/p/w342' + tv.poster_path : null
+            posterUrl: tv.poster_path
+              ? 'https://image.tmdb.org/t/p/w342' + tv.poster_path
+              : null
           };
         });
 
-        setMovies(normalizedMovie);
+        setMovies(normalizedMovies);
         setTvSeries(normalizedTv);
       })
       .catch(() => {
@@ -103,21 +102,11 @@ export function MovieProvider({ children }) {
       });
   };
 
-  const value = {
-    query,
-    setQuery,
+  return {
     movies,
     tvSeries,
     loading,
     error,
     searchAll
   };
-
-  return (
-    <MovieContext.Provider value={value}>
-      {children}
-    </MovieContext.Provider>
-  );
 }
-
-export default MovieContext;

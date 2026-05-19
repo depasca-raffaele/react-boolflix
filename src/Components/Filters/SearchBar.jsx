@@ -1,8 +1,11 @@
 import { useContext } from 'react';
-import MovieContext from '../../Context/MovieContext';
+import SearchContext from '../../Context/SearchContext';
+import ResultsContext from '../../Context/ResultsContext';
 
 function SearchBar() {
-  const { query, setQuery, searchAll } = useContext(MovieContext);
+  const { query, setQuery} = useContext(SearchContext);
+  const { searchAll } = useContext(ResultsContext);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();

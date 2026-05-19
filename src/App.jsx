@@ -1,13 +1,16 @@
-import { MovieProvider } from './Context/MovieContext';
+import { SearchProvider } from './Context/SearchContext';
+import { ResultsProvider } from './Context/ResultsContext';
 import Header from './Components/Header';
 import Main from './Components/Main';
 
 function App() {
   return (
-    <MovieProvider>
-      <Header />
-      <Main />
-    </MovieProvider>
+   <SearchProvider>
+      <ResultsProvider>
+        <Header />
+        <Main />
+      </ResultsProvider>
+    </SearchProvider>
   );
 }
 
