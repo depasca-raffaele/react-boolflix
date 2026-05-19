@@ -1,6 +1,6 @@
-function Error({ error }) {
+function ErrorMessage({ error }) {
   if (!error) return null;
   return <p className='error'>{error}</p>;
 }
 
-export default Error;
+export default ErrorMessage;
