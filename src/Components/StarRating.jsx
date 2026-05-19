@@ -11,10 +11,10 @@ function StarRating({ vote }) {
   return (
     <span aria-label={'Valutazione: ' + fullStars}>
       {Array.from({ length: fullStars }).map((_, index) => (
-        <i key={'full-' + index} className='fa-solid fa-star' aria-hidden='true'></i>
+        <i key={'full-' + index} className='bi bi-star-fill' aria-hidden='true'></i>
       ))}
       {Array.from({ length: emptyStars }).map((_, index) => (
-        <i key={'empty-' + index} className='fa-regular fa-star' aria-hidden='true'></i>
+        <i key={'empty-' + index} className='bi bi-star' aria-hidden='true'></i>
       ))}
     </span>
   );
