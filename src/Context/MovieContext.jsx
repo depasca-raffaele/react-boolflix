@@ -70,7 +70,9 @@ export function MovieProvider({ children }) {
             language: movie.original_language,
             vote: movie.vote_average,
             poster: movie.poster_path,
-            posterPath: movie.poster_path
+            posterPath: movie.poster_path,
+            overview: movie.overview,
+            posterUrl: movie.poster_path ? 'https://image.tmdb.org/t/p/w342' + movie.poster_path : null
           };
         });
 
@@ -82,7 +84,9 @@ export function MovieProvider({ children }) {
             language: tv.original_language,
             vote: tv.vote_average,
             poster: tv.poster_path,
-            posterPath: tv.poster_path
+            posterPath: tv.poster_path,
+            overview: tv.overview,
+            posterUrl: tv.poster_path ? 'https://image.tmdb.org/t/p/w342' + tv.poster_path : null
           };
         });
 
